@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Task1a": {
+      "commandName": "Project",
+      "commandLineArgs": "USD NOK 239"
+    }
+  }
+}
