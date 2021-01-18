@@ -22,7 +22,18 @@ namespace Common.Fixer
             this.httpClient = httpClient;
         }
 
-        public async Task<ApiClientResponse<LatestRatesResponse>> GetLatest(params string[] symbols)
+        public async Task<FixerResponse<LatestRatesResponse>> GetHistorical(DateTime date, params string[] symbols)
+        {
+            var uriBuilder = new UriBuilder(APIURI + date.ToString("yyyy-MM-dd"))
+                .AddQueryParam("access_key", APIKEY)
+                .AddQueryParam("symbols", string.Join(',', symbols));
+
+            var request = new HttpRequestMessage(HttpMethod.Get, uriBuilder.Uri);
+
+            return await Send<LatestRatesResponse>(request);
+        }
+
+        public async Task<FixerResponse<LatestRatesResponse>> GetLatest(params string[] symbols)
         {
             var uriBuilder = new UriBuilder(APIURI + "latest")
                 .AddQueryParam("access_key", APIKEY)
@@ -33,7 +44,7 @@ namespace Common.Fixer
             return await Send<LatestRatesResponse>(request);
         }
 
-        private async Task<ApiClientResponse<T>> Send<T>(HttpRequestMessage request) where T : IResponse
+        private async Task<FixerResponse<T>> Send<T>(HttpRequestMessage request) where T : IResponse
         {
             try
             {
@@ -45,7 +56,7 @@ namespace Common.Fixer
                     var response = JsonConvert.DeserializeObject<Response>(content);
                     if (response.Success)
                     {
-                        return new ApiClientResponse<T>
+                        return new FixerResponse<T>
                         {
                             Success = true,
                             Content = JsonConvert.DeserializeObject<T>(content)
@@ -53,7 +64,7 @@ namespace Common.Fixer
                     }
                 }
 
-                return new ApiClientResponse<T>
+                return new FixerResponse<T>
                 {
                     Success = false,
                     Error = JsonConvert.DeserializeObject<ErrorResponse>(content).Error

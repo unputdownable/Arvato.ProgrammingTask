@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Task2a": {
+      "commandName": "Project",
+      "commandLineArgs": "NOK USD 347 11/17/2006"
+    }
+  }
+}

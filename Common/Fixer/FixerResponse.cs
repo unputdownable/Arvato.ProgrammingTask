@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Common.Fixer
 {
-    public class ApiClientResponse<T> where T : IResponse
+    public class FixerResponse<T> where T : IResponse
     {
         public bool Success { get; set; }
         public T Content { get; set; }
