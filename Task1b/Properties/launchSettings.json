@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Task2a": {
+    "Task1b": {
       "commandName": "Project",
       "commandLineArgs": "NOK USD 347 11/17/2006"
     }

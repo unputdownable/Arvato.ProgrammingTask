@@ -22,6 +22,16 @@ namespace Common.Fixer
             this.httpClient = httpClient;
         }
 
+        public async Task<FixerResponse<SymbolsResponse>> GetSymbols()
+        {
+            var uriBuilder = new UriBuilder(APIURI + "symbols")
+                .AddQueryParam("access_key", APIKEY);
+
+            var request = new HttpRequestMessage(HttpMethod.Get, uriBuilder.Uri);
+
+            return await Send<SymbolsResponse>(request);
+        }
+
         public async Task<FixerResponse<LatestRatesResponse>> GetHistorical(DateTime date, params string[] symbols)
         {
             var uriBuilder = new UriBuilder(APIURI + date.ToString("yyyy-MM-dd"))

@@ -18,8 +18,8 @@ namespace Task1a
                 Console.WriteLine("Argument(s) missing (currency from, currency to, amount)");
                 return;
             }
-            var currencyFrom = args[0];
-            var currencyTo = args[1];
+            var currencyFrom = args[0]?.ToUpper();
+            var currencyTo = args[1]?.ToUpper();
             decimal amount;
             try
             {
@@ -51,9 +51,6 @@ namespace Task1a
             var converter = new CurrencyConverter(latest.Rates);
             var convertedAmount = converter.Convert(currencyFrom, currencyTo, amount);
             Console.WriteLine($"{amount:0.00} {currencyFrom} is {convertedAmount:0.00} {currencyTo}");
-            
-            
-
         }
     }
 }

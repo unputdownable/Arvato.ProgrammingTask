@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "Task1a": {
+    "Task1c": {
       "commandName": "Project",
-      "commandLineArgs": "USD - 239"
+      "commandLineArgs": "-u"
     }
   }
 }

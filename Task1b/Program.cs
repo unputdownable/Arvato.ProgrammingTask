@@ -23,8 +23,8 @@ namespace Task1b
                 Console.WriteLine("Argument(s) missing (currency from, currency to, amount)");
                 return;
             }
-            var currencyFrom = args[0];
-            var currencyTo = args[1];
+            var currencyFrom = args[0]?.ToUpper();
+            var currencyTo = args[1]?.ToUpper();
             decimal amount;
             DateTime? date = null;
             try
