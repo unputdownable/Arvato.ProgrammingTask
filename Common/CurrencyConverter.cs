@@ -21,7 +21,7 @@ namespace Common
 
         private decimal GetRate(string symbol)
         {
-            if (!Rates.TryGetValue(symbol, out var rate)) throw new Exception("Rate not found");
+            if (!Rates.TryGetValue(symbol.ToUpper(), out var rate)) throw new Exception("Rate not found");
             return rate;
         }
 

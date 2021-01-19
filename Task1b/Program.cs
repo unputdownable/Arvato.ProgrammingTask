@@ -44,7 +44,7 @@ namespace Task1b
             
             using var api = new ApiClient(new HttpClient());
 
-            FixerResponse<LatestRatesResponse> response;
+            FixerResponse<RatesResponse> response;
             if (date is not null)
                 response = await api.GetHistorical((DateTime)date, currencyFrom, currencyTo);
             else

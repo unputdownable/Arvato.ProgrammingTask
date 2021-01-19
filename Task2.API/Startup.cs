@@ -1,5 +1,6 @@
 using Common.Database;
 using Common.Database.Models;
+using Common.Fixer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,8 @@ namespace Task2.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Task2.API", Version = "v1" });
             });
+
+            services.AddHttpClient<IApiClient, ApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
