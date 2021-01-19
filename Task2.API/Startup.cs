@@ -36,7 +36,7 @@ namespace Task2.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Task2.API", Version = "v1" });
             });
 
-            services.AddHttpClient<IApiClient, ApiClient>();
+            services.AddHttpClient<IFixerClient, FixerClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

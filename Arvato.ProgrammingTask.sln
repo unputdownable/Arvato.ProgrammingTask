@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task1c", "Task1c\Task1c.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task1b", "Task1b\Task1b.csproj", "{1D417472-8502-4572-BD69-711E6A419B90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2.API", "Task2.API\Task2.API.csproj", "{7C9E729F-4B18-4862-91AB-6FA4CA29C4D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task2.API", "Task2.API\Task2.API.csproj", "{7C9E729F-4B18-4862-91AB-6FA4CA29C4D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2.Web", "Task2.Web\Task2.Web.csproj", "{248BF12A-7DA3-45C2-9A64-6DFC526EE3CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task2.Web", "Task2.Web\Task2.Web.csproj", "{248BF12A-7DA3-45C2-9A64-6DFC526EE3CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

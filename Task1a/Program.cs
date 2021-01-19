@@ -31,7 +31,7 @@ namespace Task1a
                 return;
             }
             
-            using var api = new ApiClient(new HttpClient());
+            using var api = new FixerClient(new HttpClient());
 
             var response = await api.GetLatest(currencyFrom, currencyTo);
             if (!response.Success)

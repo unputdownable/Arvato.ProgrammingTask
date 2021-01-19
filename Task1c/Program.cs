@@ -18,7 +18,7 @@ namespace Task1c
             var updateCurencies = args.SingleOrDefault(a => a == "-u");
 
             var context = new RatesContextFactory().CreateDbContext(args);
-            var api = new ApiClient(new HttpClient());
+            var api = new FixerClient(new HttpClient());
             
             if (updateCurencies is not null)
             {

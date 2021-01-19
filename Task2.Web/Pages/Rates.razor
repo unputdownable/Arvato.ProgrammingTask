@@ -1,0 +1,50 @@
+﻿@page "/rates"
+@inject RatesApi api
+
+<div style="display:flex; margin-bottom:50px;">
+    <input class="form-control" style="max-width: 100px" placeholder="Currency" @bind="Currency" />
+    <button class="btn btn-outline-primary" @onclick="GetRates" style="margin-left: 20px">Get rates</button>
+</div>
+
+
+@if (RatesData is not null && RatesData.Any())
+{
+    <SfChart>
+        <ChartPrimaryXAxis RangePadding="ChartRangePadding.Additional"></ChartPrimaryXAxis>
+        <ChartSeriesCollection>
+            <ChartSeries DataSource="RatesData" XName="Timestamp" YName="Rate" Type="ChartSeriesType.Line">
+                <ChartMarker Visible="true" />
+            </ChartSeries>
+        </ChartSeriesCollection>
+        <ChartPrimaryYAxis></ChartPrimaryYAxis>
+    </SfChart>
+}
+
+
+@code {
+
+    public List<RateData> RatesData { get; set; }
+    public string Currency { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+
+    async Task GetRates()
+    {
+        var rates = await api.GetRates(Currency);
+        RatesData = rates.Select(r => new RateData
+        {
+            Timestamp = r.Key,
+            Rate = Math.Round(r.Value, 2)
+        }).ToList();
+    }
+
+    public class RateData
+    {
+        public string Timestamp { get; set; }
+        public double Rate { get; set; }
+    }
+
+}

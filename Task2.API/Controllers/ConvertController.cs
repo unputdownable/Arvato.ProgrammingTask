@@ -14,9 +14,9 @@ namespace Task2.API.Controllers
     public class ConvertController : ControllerBase
     {
         private readonly RatesContext context;
-        private readonly IApiClient api;
+        private readonly IFixerClient api;
 
-        public ConvertController(RatesContext context, IApiClient api)
+        public ConvertController(RatesContext context, IFixerClient api)
         {
             this.context = context;
             this.api = api;
@@ -24,7 +24,7 @@ namespace Task2.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(ConvertResponse), StatusCodes.Status200OK)]
-        [ProducesErrorResponseType(typeof(ErrorResponse))]
+        [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Convert(string from, string to, decimal amount, DateTime? date = null)
         {
             if (from is null || to is null)

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Syncfusion.Blazor;
 using System;
 using System.Net.Http;
 using Task2.Web.Services;
@@ -30,11 +31,15 @@ namespace Task2.Web
                 BaseAddress = new Uri(Configuration.GetConnectionString("API")) 
             });
             services.AddScoped<RatesApi>();
+
+            services.AddSyncfusionBlazor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(Configuration["syncfusion-key"]);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -42,7 +42,7 @@ namespace Task1b
             }
 
             
-            using var api = new ApiClient(new HttpClient());
+            using var api = new FixerClient(new HttpClient());
 
             FixerResponse<RatesResponse> response;
             if (date is not null)

@@ -10,14 +10,14 @@ using System.Web;
 
 namespace Common.Fixer
 {
-    public class ApiClient : IApiClient, IDisposable
+    public class FixerClient : IFixerClient, IDisposable
     {
         private const string APIKEY = "0d584ee9f951f6327002973520e607b8";
         private const string APIURI = "http://data.fixer.io/api/";
 
         private readonly HttpClient httpClient;
 
-        public ApiClient(HttpClient httpClient)
+        public FixerClient(HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }
