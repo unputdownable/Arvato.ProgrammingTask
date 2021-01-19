@@ -1,17 +1,11 @@
 ﻿using Common;
 using Common.API.Models;
 using Common.Database;
-using Common.Database.Models;
 using Common.Fixer;
-using Common.Fixer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using ErrorResponse = Common.API.Models.ErrorResponse;
 
 namespace Task2.API.Controllers
 {
@@ -38,22 +32,18 @@ namespace Task2.API.Controllers
                 return BadRequest(new ErrorResponse("One or more symbols missing"));
             }
 
-            FixerResponse<RatesResponse> response;
+            FixerResponse<Common.Fixer.Models.RatesResponse> response;
             if (date is null)
                 response = await api.GetLatest(from, to);
             else
                 response = await api.GetHistorical((DateTime)date, from, to);
             
             if (!response.Success)
-            {
                 return BadRequest(new ErrorResponse(response.Error.Info));
-            }
-
 
             if (response.Content.Rates.Count != 2)
-            {
                 return BadRequest(new ErrorResponse("One or more symbols not found"));
-            }
+
 
             var converter = new CurrencyConverter(response.Content.Rates);
             var convertResponse = new ConvertResponse
@@ -61,14 +51,14 @@ namespace Task2.API.Controllers
                 Date = response.Content.Date,
                 From = new ConvertResponse.Amount
                 { 
-                    Currency = from.ToUpper(), 
+                    Currency = from.ToUpper(),
                     Value = amount 
                 },
                 To = new ConvertResponse.Amount
                 { 
-                    Currency = to.ToUpper(), 
+                    Currency = to.ToUpper(),
                     Value = converter.Convert(from, to, amount) 
-                }                
+                }
             };
 
             return Ok(convertResponse);

@@ -1,0 +1,38 @@
+﻿@page "/"
+@inject RatesApi api
+
+<div style="max-width: 300px;">
+    <input @bind="From" class="form-control" placeholder="From currency" />
+    <input @bind="To" class="form-control" placeholder="To currency" />
+    <input @bind="Amount" class="form-control" placeholder="Amount" />
+    <input @bind="Date" type="date" class="form-control" />
+    
+    <div class="form-check form-check-inline">
+        <input @bind="Historical" type="checkbox" id="historical" class="form-check-input" />
+        <label for="historical" class="form-check-label">Historical</label>
+    </div>
+
+    <button class="btn btn-block btn-outline-primary" @onclick="GetConversion">Convert</button>
+</div>
+
+
+<pre>@ConversionResponse</pre>
+
+
+@code {
+
+    string From { get; set; }
+    string To { get; set; }
+    string Amount { get; set; }
+    bool Historical { get; set; }
+    DateTime? Date { get; set; }
+
+    string ConversionResponse { get; set; }
+
+
+    async Task GetConversion()
+    {
+        ConversionResponse = await api.Convert(From, To, System.Convert.ToDecimal(Amount), (Historical ? Date : null));
+    }
+
+}

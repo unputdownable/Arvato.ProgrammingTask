@@ -1,16 +1,13 @@
-using Common.Database;
-using Common.Database.Models;
-using Common.Fixer;
-using Serilog;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using System;
+using System.Net.Http;
+using Task2.Web.Services;
 
-namespace Task2.API
+namespace Task2.Web
 {
     public class Startup
     {
@@ -22,21 +19,17 @@ namespace Task2.API
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
 
-            services.AddDbContext<RatesContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("Rates"));
+            services.AddScoped(sp => new HttpClient 
+            { 
+                BaseAddress = new Uri(Configuration.GetConnectionString("API")) 
             });
-
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Task2.API", Version = "v1" });
-            });
-
-            services.AddHttpClient<IApiClient, ApiClient>();
+            services.AddScoped<RatesApi>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,21 +38,23 @@ namespace Task2.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Task2.API v1"));
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
 
-            app.UseSerilogRequestLogging();
-
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/_Host");
             });
         }
     }
